@@ -5,9 +5,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created by Aoi on 27.01.2017.
@@ -154,4 +155,37 @@ public class JDBCQuerries {
         }
         return out_map;
     }
+
+    public Boolean isECSAccrec (String accrec){
+        String sql =
+                "SELECT "+
+                "1 "+
+                "FROM "+
+                "SYSBEE.SERV2BAL    S2B, "+
+                "SYSBEE.SERV_ACCREC SA, "+
+                "SYSBEE.ACCREC      A, "+
+                "SYSBEE.SERV        S "+
+                "WHERE "+
+                "S.SERV_ID         = S2B.SERV_ID "+
+                "AND S2B.P_SERV2BAL_ID = SA.SERV2BAL_ID "+
+                "AND SA.ACCREC_ID      = A.ACCREC_ID "+
+                "AND A.NAME = '9530407002' "+
+                "AND S.SERV_ID = 5301 "+
+                "AND SYSDATE BETWEEN S2B.DATTIM1 AND S2B.DATTIM2 ";
+        try (Connection connection = template.getDataSource().getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.first()){
+                    return true;
+                }
+                else return false;
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

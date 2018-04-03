@@ -176,10 +176,7 @@ public class JDBCQuerries {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
                 preparedStatement.setNString(1,accrec);
                 ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.first()){
-                    return true;
-                }
-                else return false;
+                return resultSet.next();
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }

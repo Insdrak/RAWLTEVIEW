@@ -110,7 +110,7 @@ public class MyUI extends UI {
             get_raw_lte_button.addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-                    if(jdbcQuerries.isECSAccrec(accrec_name_input_text_field.getValue())){
+                    if(!jdbcQuerries.isECSAccrec(accrec_name_input_text_field.getValue())){
                         main_q_checkBox.setValue(false);
                         oneGB_pack_q_checkBox.setValue(false);
                         turbo_button_q_checkBox.setValue(false);

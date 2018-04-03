@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:ldap="http://www.springframework.org/schema/ldap"
+       xsi:schemaLocation="http://www.springframework.org/schema/ldap http://www.springframework.org/schema/ldap/spring-ldap-2.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+
+
+    <!--
+
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    -->
+
+    <!--
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+              destroy-method="close">
+            <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+            <property name="url" value="jdbc:oracle:thin:@siskin.ycc.ru:1521:CHARGE" />
+            <property name="username" value="it_insdrak" />
+            <property name="password" value="VjnbdDrak0" />
+            <property name="validationQuery" value="select 1 from dual" />
+            <property name="initialSize" value="1" />
+            <property name="maxActive" value="2" />
+            <property name="maxIdle" value="1" />
+            <property name="removeAbandoned" value="true" />
+            <property name="removeAbandonedTimeout" value="10" />
+        </bean>
+        -->
+<!--
+
+        &lt;!&ndash;STATDB&ndash;&gt;
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+              destroy-method="close">
+            <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+            <property name="url" value="jdbc:oracle:thin:@TOUCAN.ASR.RU:1521:HOSTPRP" />
+            <property name="validationQuery" value="select 1 from dual" />
+            <property name="username" value="statgirl" />
+            <property name="password" value="stat2014girl"/>
+            <property name="removeAbandoned" value="true" />
+            <property name="removeAbandonedTimeout" value="180" />
+        </bean>
+-->
+<!--
+        &lt;!&ndash;HAWKHP&ndash;&gt;
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+              destroy-method="close">
+            <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+            <property name="url" value="jdbc:oracle:thin:@192.168.26.36:1521:hostprp" />
+            <property name="username" value="statgirl" />
+            <property name="password" value="stat2014girl" />
+            <property name="validationQuery" value="select 1 from dual" />
+            <property name="timeBetweenEvictionRunsMillis" value="100" />
+            <property name="initialSize" value="1" />
+            <property name="maxActive" value="2" />
+            <property name="maxIdle" value="1" />
+            <property name="removeAbandoned" value="true" />
+            <property name="removeAbandonedTimeout" value="10" />
+        </bean>
+    -->
+
+    <!--HAWKHP-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url" value="jdbc:oracle:thin:@192.168.26.36:1521:hostprp" />
+        <property name="username" value="it_insdrak" />
+        <property name="password" value="VjnbdDrak0./" />
+        <property name="validationQuery" value="select 1 from dual" />
+        <property name="timeBetweenEvictionRunsMillis" value="100" />
+        <property name="initialSize" value="1" />
+        <property name="maxActive" value="2" />
+        <property name="maxIdle" value="1" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="10" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" depends-on="dataSource">
+        <constructor-arg type="javax.sql.DataSource">
+            <ref bean="dataSource" />
+        </constructor-arg>
+    </bean>
+
+    <context:annotation-config></context:annotation-config>
+    <context:component-scan base-package="DAO"></context:component-scan>
+    <context:component-scan base-package="EXEC"></context:component-scan>
+</beans>

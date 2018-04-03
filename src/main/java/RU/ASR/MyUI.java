@@ -23,10 +23,10 @@ import java.math.BigInteger;
 import java.util.*;
 
 /**
- * This UI is the application entry point. A UI may either represent a browser window 
+ * This UI is the application entry point. A UI may either represent a browser window
  * (or tab) or some part of a html page where a Vaadin application is embedded.
  * <p>
- * The UI is initialized using {@link #init(VaadinRequest)}. This method is intended to be 
+ * The UI is initialized using {@link #init(VaadinRequest)}. This method is intended to be
  * overridden to add component to the user interface and initialize non-component functionality.
  */
 @Theme("mytheme")
@@ -110,19 +110,21 @@ public class MyUI extends UI {
             get_raw_lte_button.addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-                    main_q_checkBox.setValue(false);
-                    oneGB_pack_q_checkBox.setValue(false);
-                    turbo_button_q_checkBox.setValue(false);
-                    p_to_p_q_checkBox.setValue(false);
-                    main_q_checkBox.setEnabled(true);
-                    oneGB_pack_q_checkBox.setEnabled(true);
-                    turbo_button_q_checkBox.setEnabled(true);
-                    p_to_p_q_checkBox.setEnabled(true);
-                    current_data = jdbcQuerries.get_raw_lte(accrec_name_input_text_field.getValue(), input_start_range_date_field.getValue(), input_end_range_date_field.getValue());
-                    current_data_converted = Lte_with_RG_spr_entry_converter.convert_lte_with_RG_spr_entry_from(current_data);
-                    parse_RG_in_converted_data();
-                    reassemble_table();
-
+                    if(jdbcQuerries.isECSAccrec(accrec_name_input_text_field.getValue())){
+                        main_q_checkBox.setValue(false);
+                        oneGB_pack_q_checkBox.setValue(false);
+                        turbo_button_q_checkBox.setValue(false);
+                        p_to_p_q_checkBox.setValue(false);
+                        main_q_checkBox.setEnabled(true);
+                        oneGB_pack_q_checkBox.setEnabled(true);
+                        turbo_button_q_checkBox.setEnabled(true);
+                        p_to_p_q_checkBox.setEnabled(true);
+                        current_data = jdbcQuerries.get_raw_lte(accrec_name_input_text_field.getValue(), input_start_range_date_field.getValue(), input_end_range_date_field.getValue());
+                        current_data_converted = Lte_with_RG_spr_entry_converter.convert_lte_with_RG_spr_entry_from(current_data);
+                        parse_RG_in_converted_data();
+                        reassemble_table();
+                    }
+                    System.out.printf("Данный сервис не потдерживает работу с номерами перенесенными в ECS");
                 }
             });
 
@@ -217,7 +219,6 @@ public class MyUI extends UI {
         else {
             Notification.show(user_name + ": " + access_denied, Notification.Type.ERROR_MESSAGE);
         }
-
     }
 
     private void reassemble_table() {

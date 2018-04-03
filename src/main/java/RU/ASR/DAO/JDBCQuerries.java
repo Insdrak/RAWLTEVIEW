@@ -169,11 +169,12 @@ public class JDBCQuerries {
                 "S.SERV_ID         = S2B.SERV_ID "+
                 "AND S2B.P_SERV2BAL_ID = SA.SERV2BAL_ID "+
                 "AND SA.ACCREC_ID      = A.ACCREC_ID "+
-                "AND A.NAME = '9530407002' "+
+                "AND A.NAME = ? "+
                 "AND S.SERV_ID = 5301 "+
                 "AND SYSDATE BETWEEN S2B.DATTIM1 AND S2B.DATTIM2 ";
         try (Connection connection = template.getDataSource().getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+                preparedStatement.setNString(1,accrec);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.first()){
                     return true;
